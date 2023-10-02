@@ -28,7 +28,13 @@ export class StudentController {
     }
   }
 
-
-
-
+  //   get all student
+  @Get()
+  async getAllStudent(@Res() response) {
+    const studentData = await this.studentService.getAllStudents();
+    return response.status(HttpStatus.OK).json({
+      message: 'all student data found successfull',
+      studentData,
+    });
+  }
 }
