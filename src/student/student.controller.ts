@@ -1,6 +1,16 @@
+import { UpdateStudentDto } from './../dto/update.stuend.dto';
 import { StudentCreateDto } from 'src/dto/create.student.dto';
 import { StudentService } from './student.service';
-import { Body, Controller, Get, HttpStatus, Post, Res } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  HttpStatus,
+  Post,
+  Res,
+  Put,
+  Param,
+} from '@nestjs/common';
 
 @Controller('student')
 export class StudentController {
@@ -35,6 +45,23 @@ export class StudentController {
     return response.status(HttpStatus.OK).json({
       message: 'all student data found successfull',
       studentData,
+    });
+  }
+
+  //update student data
+  @Put('/:id')
+  async updateStudent(
+    @Res() response,
+    @Param('id') studnetId: string,
+    @Body() updateStudentDto: UpdateStudentDto,
+  ) {
+    const exestingStudent = await this.studentService.updateStudent(
+      studnetId,
+      updateStudentDto,
+    );
+    return response.status(HttpStatus.OK).json({
+      message: 'Student update successfull successfull',
+      exestingStudent,
     });
   }
 }
